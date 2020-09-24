@@ -8,11 +8,11 @@ class AuthServiceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'])->except(['login','register']);
+        $this->middleware(['auth:sanctum'])->except(['login','register']);
     }
 
     public function register(){
-        
+
     }
 
     public function login(){
