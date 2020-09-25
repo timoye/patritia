@@ -31,7 +31,29 @@ class AuthServiceController extends Controller
     }
 
     public function login(Request $request){
-
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        try{
+            $credentials=[
+                'email' =>$request->email,
+                'password'=>$request->password
+            ];
+            if (Auth::attempt($credentials)){
+                $user =  User::whereEmail($credentials['email'])->first();
+                $token = $user->createToken('app')->plainTextToken;
+                $payload=['status'=>'success','details'=>'Successfully Authenticated','token'=>$token];
+            }
+            else{
+                $payload=['status'=>'fail','details'=>'unauthenticated'];
+                return response()->json($payload, 403);
+            }
+        }
+        catch (\Exception $e){
+            $payload=['status'=>'fail','details'=>$e->getMessage()];
+        }
+        return response()->json($payload, 200);
     }
 
     public function renewToken(Request $request){

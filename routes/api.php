@@ -19,6 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/register', 'AuthServiceController@register');
-Route::get('/login', 'AuthServiceController@login');
+Route::post('/login', 'AuthServiceController@login');
 Route::get('/renew-token', 'AuthServiceController@renewToken')->middleware('auth:sanctum');
 Route::get('/user-data', 'AuthServiceController@userData')->middleware('auth:sanctum');
