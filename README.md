@@ -59,6 +59,7 @@ Status code 422
     }
 }
 OR 
+Status code 200
 {
     "status": "fail",
     "message": "Something went wrong"
