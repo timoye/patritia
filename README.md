@@ -8,7 +8,7 @@ After token is generated, it is used in the Header for protected requests. See b
 
 Headers for endpoints that requires token
  ```json
-Authorization: Bearer  {API Token Generated}
+Authorization: Bearer  API Token Generated
 Accepts: application/json
  ```
 
@@ -95,7 +95,7 @@ Status code 403
 
 Renew Token endpoint only requires the Header Authorization parameters
  ```json
-Authorization: Bearer  {API Token Generated}
+Authorization: Bearer  API Token Generated
  ```
 Successful Renew Token response 
  ```json
@@ -120,7 +120,7 @@ Status code 200
 
 User Data endpoint only requires the Header Authorization parameters
  ```json
-Authorization: Bearer  {API Token Generated}
+Authorization: Bearer  API Token Generated
  ```
 Successful User Data response 
  ```json
