@@ -19,9 +19,9 @@ There are 4 API Endpoints
 | Route Name  | Endpoint | Type | Details  |
 | ------------- | ------------- | ------------- |------------- |
 | [Register](#register)  | /api/register  | POST | Unprotected |
-| Login  | /api/login   | POST | Unprotected |
-| Renew Token  | /api/renew-token  | GET | Requires Token |
-| User Data  | /api/user-data  | GET | Requires Token |
+| [Login](#login)  | /api/login   | POST | Unprotected |
+| [Renew Token](#renew-token)  | /api/renew-token  | GET | Requires Token |
+| [User Data](#user-data)  | /api/user-data  | GET | Requires Token |
 
 
 Download this [Postman Collection file](https://github.com/timoye/patritia) of all requests
@@ -64,7 +64,7 @@ OR
     "message": "Something went wrong"
 }
  ```  
-## Login
+# Login
 
 Login endpoint accepts 2 parameters
  ```json
@@ -90,7 +90,7 @@ Status code 403
 }
  ```
  
-## Renew Token
+# Renew Token
 
 Renew Token endpoint only requires the Header Authorization parameters
  ```json
@@ -115,7 +115,7 @@ Status code 200
 }
  ```
  
-## User Data
+# User Data
 
 User Data endpoint only requires the Header Authorization parameters
  ```json
