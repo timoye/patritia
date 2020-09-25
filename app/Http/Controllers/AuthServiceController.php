@@ -42,7 +42,7 @@ class AuthServiceController extends Controller
             ];
             if (Auth::attempt($credentials)){
                 $user =  User::whereEmail($credentials['email'])->first();
-                $token = $user->createToken('app')->plainTextToken;
+                $token = $user->createToken('patricia-app')->plainTextToken;
                 $payload=['status'=>'success','details'=>'Successfully Authenticated','token'=>$token];
             }
             else{
@@ -56,8 +56,17 @@ class AuthServiceController extends Controller
         return response()->json($payload, 200);
     }
 
-    public function renewToken(Request $request){
-
+    public function renewToken(){
+        try {
+            $user = Auth::user();
+            $user->tokens()->delete();
+            $token = $user->createToken('patricia-app')->plainTextToken;
+            $payload=['status'=>'success','details'=>'Successfully Renewed Token','token'=>$token];
+        }
+        catch (\Exception $e){
+            $payload=['status'=>'fail','details'=>$e->getMessage()];
+        }
+        return response()->json($payload, 200);
     }
 
     public function userData(){
