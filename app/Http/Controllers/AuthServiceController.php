@@ -22,10 +22,10 @@ class AuthServiceController extends Controller
         try{
             $user=User::create(['name'=>$request->name, 'email'=>$request->email, 'password'=>bcrypt($request->password)]);
             $token = $user->createToken('patricia-app')->plainTextToken;
-            $payload=['status'=>'success','details'=>'Successfully Registered','token'=>$token];
+            $payload=['status'=>'success','message'=>'Successfully Registered','token'=>$token];
         }
         catch (\Exception $e){
-            $payload=['status'=>'fail','details'=>$e->getMessage()];
+            $payload=['status'=>'fail','message'=>$e->getMessage()];
         }
         return response()->json($payload, 200);
     }
@@ -43,15 +43,15 @@ class AuthServiceController extends Controller
             if (Auth::attempt($credentials)){
                 $user =  User::whereEmail($credentials['email'])->first();
                 $token = $user->createToken('patricia-app')->plainTextToken;
-                $payload=['status'=>'success','details'=>'Successfully Authenticated','token'=>$token];
+                $payload=['status'=>'success','message'=>'Successfully Authenticated','token'=>$token];
             }
             else{
-                $payload=['status'=>'fail','details'=>'unauthenticated'];
+                $payload=['status'=>'fail','message'=>'unauthenticated'];
                 return response()->json($payload, 403);
             }
         }
         catch (\Exception $e){
-            $payload=['status'=>'fail','details'=>$e->getMessage()];
+            $payload=['status'=>'fail','message'=>$e->getMessage()];
         }
         return response()->json($payload, 200);
     }
@@ -61,10 +61,10 @@ class AuthServiceController extends Controller
             $user = Auth::user();
             $user->tokens()->delete();
             $token = $user->createToken('patricia-app')->plainTextToken;
-            $payload=['status'=>'success','details'=>'Successfully Renewed Token','token'=>$token];
+            $payload=['status'=>'success','message'=>'Successfully Renewed Token','token'=>$token];
         }
         catch (\Exception $e){
-            $payload=['status'=>'fail','details'=>$e->getMessage()];
+            $payload=['status'=>'fail','message'=>$e->getMessage()];
         }
         return response()->json($payload, 200);
     }

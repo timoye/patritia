@@ -1,78 +1,144 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+## Introduction
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This is a simple Auth Service based on Laravel.
+ 
+ Token is generated in a json response from the Register, Login or Renew Token endpoint.
 
-## About Laravel
+After token is generated, it is used in the Header for protected requests. See below
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Headers for endpoints that requires token
+ ```json
+Authorization: Bearer  {API Token Generated}
+Accepts: application/json
+ ```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Endpoints
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+There are 4 API Endpoints
 
-## Learning Laravel
+| Route Name  | Endpoint | Type | Details  |
+| ------------- | ------------- | ------------- |------------- |
+| [Register](#register)  | /api/register  | POST | Unprotected |
+| Login  | /api/login   | POST | Unprotected |
+| Renew Token  | /api/renew-token  | GET | Requires Token |
+| User Data  | /api/user-data  | GET | Requires Token |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Download this [Postman Collection file](https://github.com/timoye/patritia) of all requests
+  
+# Register
 
-## Laravel Sponsors
+Register endpoint accepts 3 parameters
+ ```json
+name | required
+email | unique to a user and required
+password | required
+ ```
+Successful Register response 
+ ```json
+Status code 200
+{
+    "status": "success",
+    "message": "Successfully Registered",
+    "token": "1|yba3MVcRCFmQ2CaEnikKkuXoiXaBMuzNv1UaZiZe"
+}
+ ```
+ 
+Unsuccessful Register response 
+ ```json
+Status code 200
+{
+    "message": "The given data was invalid.",
+    "errors": {
+        "name": [
+            "The name field is required."
+        ],
+        "email": [
+            "The email has already been taken."
+        ]
+    }
+}
+OR 
+{
+    "status": "fail",
+    "message": "Something went wrong"
+}
+ ```  
+## Login
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Login endpoint accepts 2 parameters
+ ```json
+email | required
+password | required
+ ```
+Successful Login response 
+ ```json
+Status code 200
+{
+    "status": "success",
+    "message": "Successfully Authenticated",
+    "token": "4|Fz4qLAbXpAnlSy6wd7YwWCDvypCUftVc629fqYP8"
+}
+ ```
+ 
+Unsuccessful Login response 
+ ```json
+Status code 403
+{
+    "status": "fail",
+    "message": "unauthenticated"
+}
+ ```
+ 
+## Renew Token
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+Renew Token endpoint only requires the Header Authorization parameters
+ ```json
+Authorization: Bearer  {API Token Generated}
+ ```
+Successful Renew Token response 
+ ```json
+Status code 200
+{
+    "status": "success",
+    "message": "Successfully Renewed Token",
+    "token": "6|xqY7kJVnRUhRm9b4P9rKmTEnXvC8U98QTzLJcWCK"
+}
+ ```
+ 
+Unsuccessful Renew Token response 
+ ```json
+Status code 200
+{
+    "status": "fail",
+    "message": "Something went wrong"
+}
+ ```
+ 
+## User Data
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+User Data endpoint only requires the Header Authorization parameters
+ ```json
+Authorization: Bearer  {API Token Generated}
+ ```
+Successful User Data response 
+ ```json
+Status code 200
+{
+    "id": 1,
+    "name": "Tim",
+    "email": "tim@gmail.com",
+    "email_verified_at": null,
+    "created_at": "2020-09-25T02:26:55.000000Z",
+    "updated_at": "2020-09-25T02:26:55.000000Z"
+}
+ ```
+ 
+Unsuccessful User Data response 
+ ```json
+Status code 200
+{
+    "status": "fail",
+    "message": "Something went wrong"
+}
+ ```
