@@ -46,7 +46,7 @@ Status code 200
  
 Unsuccessful Register response 
  ```json
-Status code 200
+Status code 422
 {
     "message": "The given data was invalid.",
     "errors": {
