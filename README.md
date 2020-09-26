@@ -2,7 +2,7 @@
 
 This is a simple Auth Service based on Laravel.
  
- Token is generated in a json response from the Register, Login or Renew Token endpoint.
+Token is generated in a json response from the Register, Login or Renew Token endpoint.
 
 After token is generated, it is used in the Header for protected requests. See below
 
@@ -11,6 +11,14 @@ Headers for endpoints that requires token
 Authorization: Bearer  API Token Generated
 Accepts: application/json
  ```
+
+## Setup
+- Pull this repo
+- Run composer install
+- Copy .env.example to .env
+- Setup database by creating sqlite.database file in database directory (Or setup MySQL if you wish)
+- Run php artisan serve 
+- Register a user using endpoint or use Postman Collection in [Endpoints](#endpoints)
 
 ## Endpoints
 
@@ -143,3 +151,10 @@ Status code 200
     "message": "Something went wrong"
 }
  ```
+ 
+ ## Tests
+ 
+To run tests, run
+  ```json
+php artisan test
+  ```
