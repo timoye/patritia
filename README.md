@@ -24,7 +24,7 @@ There are 4 API Endpoints
 | [User Data](#user-data)  | /api/user-data  | GET | Requires Token |
 
 
-Download this [Postman Collection file](https://github.com/timoye/patritia) of all requests
+Download this [Postman Collection file](https://github.com/timoye/patritia/blob/master/Patritia%20Test.postman_collection.json) of all requests
   
 # Register
 
