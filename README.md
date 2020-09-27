@@ -17,6 +17,7 @@ Accepts: application/json
 - Run composer install
 - Copy .env.example to .env
 - Setup database by creating sqlite.database file in database directory (Or setup MySQL if you wish)
+- Run php artisan migrate 
 - Run php artisan serve 
 - Register a user using endpoint or use Postman Collection in [Endpoints](#endpoints)
 
